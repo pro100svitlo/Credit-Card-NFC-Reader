@@ -1,12 +1,12 @@
 package com.pro100svitlo.creditCardNfcReader.utils;
 
-import android.util.Log;
-
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +20,8 @@ import java.util.Collection;
 
 public final class AtrUtils {
 
-    private static String TAG = "creditCardNfcReader";
+    private static final Logger LOGGER = LoggerFactory.getLogger(AtrUtils.class);
+
     /**
      * MultiMap containing ATR
      */
@@ -48,7 +49,7 @@ public final class AtrUtils {
                 } else if (line.startsWith("3")) { // ATR hex
                     currentATR = StringUtils.deleteWhitespace(line.toUpperCase());
                 } else {
-                    Log.d(TAG, "Encountered unexpected line in atr list: currentATR=" + currentATR + " Line(" + lineNumber
+                    LOGGER.debug("Encountered unexpected line in atr list: currentATR=" + currentATR + " Line(" + lineNumber
                             + ") = " + line);
                 }
             }

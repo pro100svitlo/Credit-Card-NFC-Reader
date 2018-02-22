@@ -5,16 +5,16 @@ import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.pro100svitlo.creditCardNfcReader.enums.EmvCardScheme;
 import com.pro100svitlo.creditCardNfcReader.model.EmvCard;
 import com.pro100svitlo.creditCardNfcReader.parser.EmvParser;
 import com.pro100svitlo.creditCardNfcReader.utils.Provider;
 
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -96,6 +96,9 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
             "Here is my email: pro100svitlo@gmail.com. \n\n" +
             "===========================================================================";
 
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CardNfcAsyncTask.class);
+
     private Provider mProvider = new Provider();
     private boolean mException;
     private EmvCard mCard;
@@ -140,7 +143,6 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
     protected void onPreExecute() {
         super.onPreExecute();
         mInterface.startNfcReadCard();
-        mProvider.getLog().setLength(0);
     }
 
     @Override
@@ -152,7 +154,7 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
             doInBackground();
         } catch (Exception e) {
             result = e;
-            Log.e(CardNfcAsyncTask.class.getName(), e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
         }
 
         return result;
@@ -167,7 +169,7 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
                     mExpireDate = mCard.getExpireDate();
                     mCardType = mCard.getType().toString();
                     if (mCardType.equals(EmvCardScheme.UNKNOWN.toString())){
-                        Log.d("creditCardNfcReader", UNKNOWN_CARD_MESS);
+                        LOGGER.debug(UNKNOWN_CARD_MESS);
                     }
                     mInterface.cardIsReadyToRead();
                 } else if (mCard.isNfcLocked()) {
