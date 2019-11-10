@@ -1,9 +1,9 @@
 package com.pro100svitlo.creditCardNfcReader.iso7816emv.impl;
 
-import com.pro100svitlo.creditCardNfcReader.utils.BytesUtils;
 import com.pro100svitlo.creditCardNfcReader.enums.TagTypeEnum;
 import com.pro100svitlo.creditCardNfcReader.enums.TagValueTypeEnum;
 import com.pro100svitlo.creditCardNfcReader.iso7816emv.ITag;
+import com.pro100svitlo.creditCardNfcReader.utils.BytesUtils;
 
 import java.util.Arrays;
 
