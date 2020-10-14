@@ -101,6 +101,8 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
     private EmvCard mCard;
     private CardNfcInterface mInterface;
     private Tag mTag;
+    private String mFirstName;
+    private String mLastName;    
     private String mCardNumber;
     private String mExpireDate;
     private String mCardType;
@@ -163,6 +165,8 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
         if (!mException) {
             if (mCard != null) {
                 if (StringUtils.isNotBlank(mCard.getCardNumber())) {
+                    mFirstName = mCard.getHolderFirstname();
+                    mLastName = mCard.getHolderLastname();
                     mCardNumber = mCard.getCardNumber();
                     mExpireDate = mCard.getExpireDate();
                     mCardType = mCard.getType().toString();
@@ -211,6 +215,8 @@ public class CardNfcAsyncTask extends AsyncTask<Void, Void, Object>{
         mProvider = null;
         mCard = null;
         mTag = null;
+        mFirstName = null;
+        mLastName = null;
         mCardNumber = null;
         mExpireDate = null;
         mCardType = null;
